@@ -5,3 +5,4 @@ D:\Text\УЧЁБА\ОМГТУ\2 семестр\Programming\KP\clasters\K-means (
 D:\Text\УЧЁБА\ОМГТУ\2 семестр\Programming\KP\clasters\K-means (WinForms)\K-means (WinForms)\K-means (WinForms)\obj\x86\Debug\K-means (WinForms).csproj.GenerateResource.Cache
 D:\Text\УЧЁБА\ОМГТУ\2 семестр\Programming\KP\clasters\K-means (WinForms)\K-means (WinForms)\K-means (WinForms)\obj\x86\Debug\K-means (WinForms).exe
 D:\Text\УЧЁБА\ОМГТУ\2 семестр\Programming\KP\clasters\K-means (WinForms)\K-means (WinForms)\K-means (WinForms)\obj\x86\Debug\K-means (WinForms).pdb
+D:\Text\УЧЁБА\ОМГТУ\2 семестр\Programming\KP\clasters\K-means (WinForms)\K-means (WinForms)\K-means (WinForms)\obj\x86\Debug\K-means (WinForms).csprojResolveAssemblyReference.cache

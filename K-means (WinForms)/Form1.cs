@@ -56,12 +56,12 @@ namespace K_means__WinForms_
             {
                 if (e.Button == MouseButtons.Left)
                 {
-                    gdi.FillEllipse(Brushes.Black, e.X, e.Y, 5, 5);
+                    draw_point(e.X, e.Y, Brushes.Black); 
                     this.worker.elements.Add(new Misc.Element(e.X, e.Y));
                 }
                 else
                 {
-                    gdi.FillEllipse(Brushes.Red, e.X, e.Y, 10, 10);
+                    draw_centroid(e.X, e.Y, Brushes.Red, 10); 
                     this.worker.clusters.Add(new Misc.Cluster(e.X, e.Y));
                 }
             }
@@ -76,7 +76,9 @@ namespace K_means__WinForms_
             brushes.Add(Brushes.Green);
             brushes.Add(Brushes.Cyan);
             brushes.Add(Brushes.Black);
-
+            brushes.Add(Brushes.DarkKhaki);
+            brushes.Add(Brushes.DeepPink);
+            
             init_coordinate_system();
 
             foreach (Misc.Cluster cluster in worker.start())
@@ -87,15 +89,40 @@ namespace K_means__WinForms_
 
                 using (Graphics gdi = canvas.CreateGraphics())
                 {
-                    gdi.FillEllipse(brush, (int)cluster.X, (int)cluster.Y, 10, 10); 
+                    //gdi.FillEllipse(brush, (int)cluster.X, (int)cluster.Y, 10, 10); 
+                    draw_centroid((int)cluster.X, (int)cluster.Y, brush, 10); 
                     foreach (Misc.Element element in cluster.elements)
                     {
-                        gdi.FillEllipse(brush, (int)element.X, (int)element.Y, 5, 5); 
+                        draw_point((int)element.X, (int)element.Y, brush); 
                     }
                 }
 
             }
         }
+
+
+        void draw_point(int x, int y, Brush brush, int size=7)
+        {
+            using (Graphics gdi = canvas.CreateGraphics())
+            {
+                int halfsize = size / 2;
+                gdi.FillEllipse(brush, x - halfsize, y - halfsize, size, size);
+                gdi.DrawEllipse(Pens.Black, x - halfsize, y - halfsize, size, size);
+            }
+        }
+
+
+        void draw_centroid(int x, int y, Brush brush, int size = 15)
+        {
+            using (Graphics gdi = canvas.CreateGraphics())
+            {
+                int halfsize = size / 2;
+                draw_point(x, y, brush, size);
+                gdi.DrawLine(Pens.Black, x, y + halfsize, x, y - halfsize);
+                gdi.DrawLine(Pens.Black, x + halfsize, y, x - halfsize, y);
+            }
+        }
+
 
 
     }
