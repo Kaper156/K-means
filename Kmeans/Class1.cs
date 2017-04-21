@@ -104,6 +104,8 @@ namespace Kmeans
             this.MaxInfelicity = max_infelicity;
         }
 
+        
+
         void prepare()
         {
             //Добавить новые элементы
@@ -167,7 +169,6 @@ namespace Kmeans
             calc_elements();
             return calc_clusters();
         }
-
         public List<Cluster> start()
         {
 
