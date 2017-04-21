@@ -81,6 +81,7 @@ namespace K_means__WinForms_
             int halfsize = size / 2;
             gdi.FillEllipse(brush, x - halfsize, y - halfsize, size, size);
             gdi.DrawEllipse(Pens.Black, x - halfsize, y - halfsize, size, size);
+            pic_coord.Refresh();
 
         }
 
@@ -90,6 +91,7 @@ namespace K_means__WinForms_
             draw_point(gdi, x, y, brush, size);
             gdi.DrawLine(Pens.Black, x, y + halfsize, x, y - halfsize);
             gdi.DrawLine(Pens.Black, x + halfsize, y, x - halfsize, y);
+            pic_coord.Refresh();
 
         }
 
