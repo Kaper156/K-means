@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Drawing;
@@ -43,11 +44,11 @@ namespace Kmeans
             this.X = x;
             this.Y = y;
 
-            this.elements = new List<Element>();
+            this.elements = new ObservableCollection<Element>();
             brush = new SolidBrush(color);
         }
 
-        public List<Element> elements;
+        public ObservableCollection<Element> elements;
 
         public SolidBrush brush;
 
@@ -75,11 +76,11 @@ namespace Kmeans
 
     class Work
     {
-        public List<Element> elements;
+        public ObservableCollection<Element> elements;
 
-        public List<Element> unstacked;
-        
-        public List<Cluster> clusters;
+        public ObservableCollection<Element> unstacked;
+
+        public ObservableCollection<Cluster> clusters;
         
         private double max_infelicity;
         
@@ -98,27 +99,24 @@ namespace Kmeans
         public Work(double max_infelicity=0.1)
         {
 
-            this.elements = new List<Element>();
-            this.unstacked= new List<Element>();
-            this.clusters = new List<Cluster>();
+            this.elements = new ObservableCollection<Element>();
+            this.unstacked = new ObservableCollection<Element>();
+            this.clusters = new ObservableCollection<Cluster>();
             this.MaxInfelicity = max_infelicity;
         }
-
-        
 
         void prepare()
         {
             //Добавить новые элементы
-            this.elements.AddRange(this.unstacked);
-            this.unstacked.RemoveRange(0, this.unstacked.Count);
+            foreach (var element in this.unstacked)
+            {
+                this.elements.Add(element);
+            }
+            this.unstacked.Clear();
             //Очистка элементов кластера
             foreach (Cluster cluster in this.clusters)
             {
-                //if (cluster.elements.Count == 0)
-                //{
-                //    throw new CentroidWithoutElementsException("");
-                //}
-                cluster.elements.RemoveRange(0, cluster.elements.Count);
+                cluster.elements.Clear();
             }
         }
 
@@ -169,13 +167,11 @@ namespace Kmeans
             calc_elements();
             return calc_clusters();
         }
-        public List<Cluster> start()
+        public ObservableCollection<Cluster> start()
         {
-
-
-            if (step())
+            while (step())
             {
-                this.start();
+                ;
             }
 
             return this.clusters;

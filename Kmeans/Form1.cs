@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Collections.Specialized;
 
 /*
  * DataGrid
@@ -24,12 +25,13 @@ namespace Kmeans
         {
             InitializeComponent();
             this.work = new Work(0.05);
+            this.work.elements.CollectionChanged += ElementsChanged;
+            this.work.elements.CollectionChanged += ElementsChanged;
             every_draw();
             used_colors = new List<Color>();
             
         }
-
-                                                            /* ОТРИСОВКА ПОЛЯ И ДОБАВЛЕНИЕ ЭЛЕМЕНТОВ */
+                                              /* ОТРИСОВКА ПОЛЯ И ДОБАВЛЕНИЕ ЭЛЕМЕНТОВ */
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
@@ -113,7 +115,8 @@ namespace Kmeans
                     }
                     break;
             }
-            every_draw();
+            //Не нужен. вызывается от события
+            //every_draw();
         }
 
         private Color do_new_rnd_color()
@@ -133,6 +136,46 @@ namespace Kmeans
 
                                                                 /* ЛОГИКА ПРОГРАММЫ */
 
+
+        void ElementsChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add: // если добавление
+                    break;
+                case NotifyCollectionChangedAction.Remove: // если удаление
+                    break;
+                case NotifyCollectionChangedAction.Replace: // если замена
+                    break;
+            }
+        }
+
+        void ClustersChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add: // если добавление
+                    break;
+                case NotifyCollectionChangedAction.Remove: // если удаление
+                    break;
+                case NotifyCollectionChangedAction.Replace: // если замена
+                    break;
+            }
+        }
+
+        void UnstackedChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add: // если добавление
+                    break;
+                case NotifyCollectionChangedAction.Remove: // если удаление
+                    break;
+                case NotifyCollectionChangedAction.Replace: // если замена
+                    break;
+            }
+        }
+              
         private void btn_start_Click(object sender, EventArgs e)
         {
                 work.start();
