@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections.Specialized;
-
+using System.IO;
 /*
  * DataGrid
  * Масштаирование графика
@@ -24,11 +24,13 @@ namespace Kmeans
         public Form1()
         {
             InitializeComponent();
+            //dgv_elements.AutoGenerateColumns = false;
+            //dgv_groups.AutoGenerateColumns = false;
             this.work = new Work(0.05);
-            this.work.elements.CollectionChanged += ElementsChanged;
-            this.work.elements.CollectionChanged += ElementsChanged;
             every_draw();
             used_colors = new List<Color>();
+            dgv_elements.DataSource = work.elements;
+            dgv_groups.DataSource = work.clusters;
             
         }
                                               /* ОТРИСОВКА ПОЛЯ И ДОБАВЛЕНИЕ ЭЛЕМЕНТОВ */
@@ -134,7 +136,19 @@ namespace Kmeans
             return color;
         }
 
-                                                                /* ЛОГИКА ПРОГРАММЫ */
+                                                        /* СОБЫТИЯ ОТРИСОВКИ */
+
+        private void Form1_Move(object sender, EventArgs e)
+        {
+            every_draw();
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            every_draw();
+        }
+
+                                                         /* ЛОГИКА ПРОГРАММЫ */
 
 
         void ElementsChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -142,6 +156,9 @@ namespace Kmeans
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add: // если добавление
+                    {
+                        
+                    }
                     break;
                 case NotifyCollectionChangedAction.Remove: // если удаление
                     break;
@@ -178,19 +195,84 @@ namespace Kmeans
               
         private void btn_start_Click(object sender, EventArgs e)
         {
+            try
+            {
+
                 work.start();
+            }
+            catch (AccessViolationException exc)
+            {
+                MessageBox.Show("Ошибка", exc.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
                 every_draw();
         }
 
-        private void Form1_Move(object sender, EventArgs e)
+        private void открытьCsvToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            every_draw();
+            /*
+             * Структура файла вида: 
+             * х1
+             * y1
+             * Clusters (для разделения пустая строка)
+             * x1
+             * y1
+            */
+
+            var od = new OpenFileDialog();
+            if (od.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+
+                    StreamReader tr = new StreamReader(od.FileName);
+                    string[] lines = tr.ReadToEnd().Split('\n');
+                    tr.Close();
+                    int i;
+                    for (i = 0; i < lines.Length; i++)
+                    {
+                        //Пустая строка отделяет элементы от кластеров
+                        if (lines[i].Trim() == "")
+                        {
+                            break;
+                        }
+                        Element el = new Element(Convert.ToDouble(lines[i]), Convert.ToDouble(lines[i + 1]));
+                        work.unstacked.Add(el);
+
+                        //Увеличить курсор (был на первой координате)
+                        i++;
+                    }
+                    for (; i < lines.Length; i++)
+                    {
+                        Cluster cl = new Cluster(Convert.ToDouble(lines[i]), Convert.ToDouble(lines[i + 1]), do_new_rnd_color());
+                        work.clusters.Add(cl);
+                    }
+                    tr.Close();
+                }
+                catch (FormatException)
+                {
+                    MessageBox.Show("Ошибка","Неверный формат данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
         }
 
-        private void Form1_Resize(object sender, EventArgs e)
+        private void сохранитьCsvToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            every_draw();
+            SaveFileDialog sd = new SaveFileDialog();
+            if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                StreamWriter sw = new StreamWriter(sd.FileName);
+                foreach (Cluster cl in work.clusters)
+                {
+                    sw.WriteLine(cl.X);
+                    sw.WriteLine(cl.Y);
+
+                }
+                sw.Close();
+            }
         }
+
+
 
     }
 }

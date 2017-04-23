@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.ComponentModel;
 
 namespace Kmeans
 {
@@ -44,11 +45,11 @@ namespace Kmeans
             this.X = x;
             this.Y = y;
 
-            this.elements = new ObservableCollection<Element>();
+            this.elements = new BindingList<Element>();
             brush = new SolidBrush(color);
         }
 
-        public ObservableCollection<Element> elements;
+        public BindingList<Element> elements;
 
         public SolidBrush brush;
 
@@ -76,11 +77,11 @@ namespace Kmeans
 
     class Work
     {
-        public ObservableCollection<Element> elements;
+        public BindingList<Element> elements;
 
-        public ObservableCollection<Element> unstacked;
+        public BindingList<Element> unstacked;
 
-        public ObservableCollection<Cluster> clusters;
+        public BindingList<Cluster> clusters;
         
         private double max_infelicity;
         
@@ -99,9 +100,9 @@ namespace Kmeans
         public Work(double max_infelicity=0.1)
         {
 
-            this.elements = new ObservableCollection<Element>();
-            this.unstacked = new ObservableCollection<Element>();
-            this.clusters = new ObservableCollection<Cluster>();
+            this.elements = new BindingList<Element>();
+            this.unstacked = new BindingList<Element>();
+            this.clusters = new BindingList<Cluster>();
             this.MaxInfelicity = max_infelicity;
         }
 
@@ -117,6 +118,10 @@ namespace Kmeans
             foreach (Cluster cluster in this.clusters)
             {
                 cluster.elements.Clear();
+            }
+            if (this.clusters.Count == 0)
+            {
+                throw new AccessViolationException("Нет ни одного кластера");
             }
         }
 
@@ -167,7 +172,7 @@ namespace Kmeans
             calc_elements();
             return calc_clusters();
         }
-        public ObservableCollection<Cluster> start()
+        public BindingList<Cluster> start()
         {
             while (step())
             {

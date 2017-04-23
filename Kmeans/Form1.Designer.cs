@@ -34,28 +34,28 @@
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.открытьCsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьCsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_start = new System.Windows.Forms.Button();
-            this.dgv_data = new System.Windows.Forms.DataGridView();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.dgv_elements = new System.Windows.Forms.DataGridView();
             this.column_x = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.column_y = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.column_group = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgv_groups = new System.Windows.Forms.DataGridView();
             this.column_group_x = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.column_group_y = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.column_color = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.btn_start = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_data)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_elements)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_groups)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -110,38 +110,47 @@
             // открытьCsvToolStripMenuItem
             // 
             this.открытьCsvToolStripMenuItem.Name = "открытьCsvToolStripMenuItem";
-            this.открытьCsvToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.открытьCsvToolStripMenuItem.Text = "Открыть csv";
+            this.открытьCsvToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.открытьCsvToolStripMenuItem.Text = "Открыть набор данных";
+            this.открытьCsvToolStripMenuItem.Click += new System.EventHandler(this.открытьCsvToolStripMenuItem_Click);
             // 
             // сохранитьCsvToolStripMenuItem
             // 
             this.сохранитьCsvToolStripMenuItem.Name = "сохранитьCsvToolStripMenuItem";
-            this.сохранитьCsvToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.сохранитьCsvToolStripMenuItem.Text = "Сохранить csv";
+            this.сохранитьCsvToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.сохранитьCsvToolStripMenuItem.Text = "Сохранить результат";
+            this.сохранитьCsvToolStripMenuItem.Click += new System.EventHandler(this.сохранитьCsvToolStripMenuItem_Click);
             // 
-            // btn_start
+            // splitContainer2
             // 
-            this.btn_start.Location = new System.Drawing.Point(3, 3);
-            this.btn_start.Name = "btn_start";
-            this.btn_start.Size = new System.Drawing.Size(75, 23);
-            this.btn_start.TabIndex = 1;
-            this.btn_start.Text = "Start";
-            this.btn_start.UseVisualStyleBackColor = true;
-            this.btn_start.Click += new System.EventHandler(this.btn_start_Click);
+            this.splitContainer2.Location = new System.Drawing.Point(3, 32);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // dgv_data
+            // splitContainer2.Panel1
             // 
-            this.dgv_data.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgv_data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgv_data.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.splitContainer2.Panel1.Controls.Add(this.dgv_elements);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.dgv_groups);
+            this.splitContainer2.Size = new System.Drawing.Size(249, 327);
+            this.splitContainer2.SplitterDistance = 216;
+            this.splitContainer2.TabIndex = 2;
+            // 
+            // dgv_elements
+            // 
+            this.dgv_elements.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgv_elements.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgv_elements.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.column_x,
             this.column_y,
             this.column_group});
-            this.dgv_data.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgv_data.Location = new System.Drawing.Point(0, 0);
-            this.dgv_data.Name = "dgv_data";
-            this.dgv_data.Size = new System.Drawing.Size(249, 216);
-            this.dgv_data.TabIndex = 0;
+            this.dgv_elements.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_elements.Location = new System.Drawing.Point(0, 0);
+            this.dgv_elements.Name = "dgv_elements";
+            this.dgv_elements.Size = new System.Drawing.Size(249, 216);
+            this.dgv_elements.TabIndex = 0;
             // 
             // column_x
             // 
@@ -159,36 +168,19 @@
             this.column_group.Name = "column_group";
             this.column_group.ReadOnly = true;
             // 
-            // splitContainer2
+            // dgv_groups
             // 
-            this.splitContainer2.Location = new System.Drawing.Point(3, 32);
-            this.splitContainer2.Name = "splitContainer2";
-            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.Controls.Add(this.dgv_data);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.dataGridView1);
-            this.splitContainer2.Size = new System.Drawing.Size(249, 327);
-            this.splitContainer2.SplitterDistance = 216;
-            this.splitContainer2.TabIndex = 2;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgv_groups.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgv_groups.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_groups.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.column_group_x,
             this.column_group_y,
             this.column_color});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(249, 107);
-            this.dataGridView1.TabIndex = 0;
+            this.dgv_groups.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_groups.Location = new System.Drawing.Point(0, 0);
+            this.dgv_groups.Name = "dgv_groups";
+            this.dgv_groups.Size = new System.Drawing.Size(249, 107);
+            this.dgv_groups.TabIndex = 0;
             // 
             // column_group_x
             // 
@@ -204,6 +196,16 @@
             // 
             this.column_color.HeaderText = "Color";
             this.column_color.Name = "column_color";
+            // 
+            // btn_start
+            // 
+            this.btn_start.Location = new System.Drawing.Point(3, 3);
+            this.btn_start.Name = "btn_start";
+            this.btn_start.Size = new System.Drawing.Size(75, 23);
+            this.btn_start.TabIndex = 1;
+            this.btn_start.Text = "Start";
+            this.btn_start.UseVisualStyleBackColor = true;
+            this.btn_start.Click += new System.EventHandler(this.btn_start_Click);
             // 
             // Form1
             // 
@@ -226,12 +228,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_data)).EndInit();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_elements)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_groups)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -241,7 +243,7 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.PictureBox canvas;
         private System.Windows.Forms.Button btn_start;
-        private System.Windows.Forms.DataGridView dgv_data;
+        private System.Windows.Forms.DataGridView dgv_elements;
         private System.Windows.Forms.DataGridViewTextBoxColumn column_x;
         private System.Windows.Forms.DataGridViewTextBoxColumn column_y;
         private System.Windows.Forms.DataGridViewTextBoxColumn column_group;
@@ -250,7 +252,7 @@
         private System.Windows.Forms.ToolStripMenuItem открытьCsvToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сохранитьCsvToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgv_groups;
         private System.Windows.Forms.DataGridViewTextBoxColumn column_group_x;
         private System.Windows.Forms.DataGridViewTextBoxColumn column_group_y;
         private System.Windows.Forms.DataGridViewComboBoxColumn column_color;
