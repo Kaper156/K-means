@@ -9,14 +9,6 @@ using System.ComponentModel;
 namespace Kmeans
 {
     
-    //public class CentroidWithoutElementsException : System.Exception {
-    //    public CentroidWithoutElementsException() { }
-
-    //    public CentroidWithoutElementsException(string message) : base(message) { }
-
-    //    public CentroidWithoutElementsException(string message, Exception inner) : base(message, inner) { }
-    //}
-
     public class Element
     {
         public Element(double x, double y)
@@ -52,6 +44,28 @@ namespace Kmeans
         public BindingList<Element> elements;
 
         public SolidBrush brush;
+
+        //Для поля в DGV
+        public string BrushColor
+        {
+            get
+            {
+                return this.brush.Color.Name;
+            }
+            set
+            {
+                //TODO:Если сделать комбобокс, то не нужен
+                try
+                {
+
+                    brush.Color = Color.FromName(value);
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Цвет неизвестен!");
+                }
+            }
+        }
 
         public double refind_position()
         {
@@ -108,13 +122,13 @@ namespace Kmeans
 
         void prepare()
         {
-            //Добавить новые элементы
-            foreach (var element in this.unstacked)
-            {
-                this.elements.Add(element);
-            }
-            this.unstacked.Clear();
-            //Очистка элементов кластера
+            ////Добавить новые элементы
+            //foreach (var element in this.unstacked)
+            //{
+            //    this.elements.Add(element);
+            //}
+            //this.unstacked.Clear();
+            
             foreach (Cluster cluster in this.clusters)
             {
                 cluster.elements.Clear();
@@ -123,6 +137,7 @@ namespace Kmeans
             {
                 throw new AccessViolationException("Нет ни одного кластера");
             }
+            
         }
 
         void calc_elements()
@@ -162,10 +177,23 @@ namespace Kmeans
                 double infelicity = cluster.refind_position();
                 is_one_changed = is_one_changed || infelicity >= max_infelicity;
             }
+
+            //Очистка элементов кластера
+            for (int i = this.clusters.Count-1; i > 0; i--)
+            {
+
+                if (this.clusters[i].elements.Count == 0)
+                {
+                    //Удалить пустые кластеры
+                    this.clusters.RemoveAt(i);
+                }
+            }
+
+            
             return is_one_changed;
         }
 
-        bool step()
+        public bool step()
         {
             prepare();
 

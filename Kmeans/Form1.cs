@@ -33,7 +33,6 @@ namespace Kmeans
             //dgv_elements.AutoGenerateColumns = false;
             //dgv_groups.AutoGenerateColumns = false;
             this.work = new Work(0.05);
-            //every_draw();
             used_colors = new List<Color>();
             dgv_elements.DataSource = work.elements;
             dgv_groups.DataSource = work.clusters;
@@ -61,6 +60,10 @@ namespace Kmeans
 
 
                 //Нарисовать все объекты
+                foreach (Element element in work.elements)
+                {
+                    draw_point(gdi, element, Brushes.Black);
+                }
                 foreach (Cluster cluster in work.clusters)
                 {
                         foreach (Element element in cluster.elements)
@@ -69,10 +72,7 @@ namespace Kmeans
                         }
                         draw_centroid(gdi, cluster);
                 }
-                foreach (Element element in work.unstacked)
-                {
-                    draw_point(gdi, element, Brushes.Black);
-                }
+                
                  
 
             //}
@@ -113,7 +113,7 @@ namespace Kmeans
                 //простая точка
                 case MouseButtons.Left:
                     {
-                        work.unstacked.Add(new Element(e.X, e.Y));
+                        work.elements.Add(new Element(e.X, e.Y));
                     }
                     break;
                 //центроида
@@ -284,6 +284,31 @@ namespace Kmeans
         {
             
             every_draw(e.Graphics);
+        }
+
+
+        private void btn_step_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                work.step();
+            }
+            catch (AccessViolationException exc)
+            {
+                MessageBox.Show("Ошибка", exc.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            canvas.Invalidate();
+        }
+
+        private void dgv_groups_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            canvas.Invalidate();
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            this.work.MaxInfelicity = (double)numericUpDown1.Value;
         }
 
 
