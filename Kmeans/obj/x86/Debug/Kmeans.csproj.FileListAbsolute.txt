@@ -6,3 +6,13 @@ D:\Text\УЧЁБА\ОМГТУ\2 семестр\Programming\KP\clasters\K-means (
 D:\Text\УЧЁБА\ОМГТУ\2 семестр\Programming\KP\clasters\K-means (WinForms)\K-means (WinForms)\Kmeans\obj\x86\Debug\Kmeans.exe
 D:\Text\УЧЁБА\ОМГТУ\2 семестр\Programming\KP\clasters\K-means (WinForms)\K-means (WinForms)\Kmeans\obj\x86\Debug\Kmeans.pdb
 D:\Text\УЧЁБА\ОМГТУ\2 семестр\Programming\KP\clasters\K-means (WinForms)\K-means (WinForms)\Kmeans\obj\x86\Debug\Kmeans.csprojResolveAssemblyReference.cache
+D:\K-means-master\Kmeans\obj\x86\Debug\Kmeans.exe
+D:\K-means-master\Kmeans\obj\x86\Debug\Kmeans.pdb
+D:\K-means-master\Kmeans\bin\Debug\Kmeans.exe
+D:\K-means-master\Kmeans\bin\Debug\Kmeans.pdb
+D:\K-means-master\Kmeans\obj\x86\Debug\Kmeans.csprojResolveAssemblyReference.cache
+D:\K-means-master\Kmeans\obj\x86\Debug\Kmeans.Form1.resources
+D:\K-means-master\Kmeans\obj\x86\Debug\Kmeans.Properties.Resources.resources
+D:\K-means-master\Kmeans\obj\x86\Debug\Kmeans.csproj.GenerateResource.Cache
+D:\Text\УЧЁБА\ОМГТУ\2 семестр\Programming\K-means-master\K-means-master\Kmeans\obj\x86\Debug\Kmeans.exe
+D:\Text\УЧЁБА\ОМГТУ\2 семестр\Programming\K-means-master\K-means-master\Kmeans\obj\x86\Debug\Kmeans.pdb

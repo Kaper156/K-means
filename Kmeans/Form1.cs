@@ -17,6 +17,12 @@ using System.IO;
 
 namespace Kmeans
 {
+    /*
+     * 
+     * Реализовать алгоритм кластеризации заданного набора точек из 
+     * R2 на N кластеров по методу k-средних. 
+     * Результат представить в виде графа связей между точками.
+     */
     public partial class Form1 : Form
     {
         Work work;
@@ -27,7 +33,7 @@ namespace Kmeans
             //dgv_elements.AutoGenerateColumns = false;
             //dgv_groups.AutoGenerateColumns = false;
             this.work = new Work(0.05);
-            every_draw();
+            //every_draw();
             used_colors = new List<Color>();
             dgv_elements.DataSource = work.elements;
             dgv_groups.DataSource = work.clusters;
@@ -37,15 +43,15 @@ namespace Kmeans
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            every_draw();
+            //every_draw();
         }
 
         //Отрисовка всего графика
-        void every_draw()
+        void every_draw(Graphics gdi)
         {
 
-            using (Graphics gdi = canvas.CreateGraphics())
-            {
+            //using (Graphics gdi = canvas.CreateGraphics())
+            //{
                 //Отрисовать координатную сетку
                 gdi.Clear(Color.White);
                 int x = canvas.Width,
@@ -69,7 +75,7 @@ namespace Kmeans
                 }
                  
 
-            }
+            //}
             
         }
 
@@ -119,6 +125,8 @@ namespace Kmeans
             }
             //Не нужен. вызывается от события
             //every_draw();
+            canvas.Invalidate();
+
         }
 
         private Color do_new_rnd_color()
@@ -140,12 +148,12 @@ namespace Kmeans
 
         private void Form1_Move(object sender, EventArgs e)
         {
-            every_draw();
+            //every_draw();
         }
 
         private void Form1_Resize(object sender, EventArgs e)
         {
-            every_draw();
+            //every_draw();
         }
 
                                                          /* ЛОГИКА ПРОГРАММЫ */
@@ -204,7 +212,7 @@ namespace Kmeans
             {
                 MessageBox.Show("Ошибка", exc.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-                every_draw();
+            canvas.Invalidate();
         }
 
         private void открытьCsvToolStripMenuItem_Click(object sender, EventArgs e)
@@ -270,6 +278,12 @@ namespace Kmeans
                 }
                 sw.Close();
             }
+        }
+
+        private void canvas_Paint(object sender, PaintEventArgs e)
+        {
+            
+            every_draw(e.Graphics);
         }
 
 
