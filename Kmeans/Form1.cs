@@ -10,9 +10,10 @@ using System.Collections.Specialized;
 using System.IO;
 /*
  * DataGrid
- * Масштаирование графика
- * Загрузка csv
- * Перерисовка
+ * -Масштаирование графика
+ * +Загрузка csv
+ * +Перерисовка
+ * -RndColor
  */
 
 namespace Kmeans
@@ -26,17 +27,17 @@ namespace Kmeans
     public partial class Form1 : Form
     {
         Work work;
-        List<Color> used_colors;
+        BindingList<Color> used_colors;
         public Form1()
         {
             InitializeComponent();
             this.work = new Work((double)numericUpDown1.Value);
-            used_colors = new List<Color>();
+            used_colors = new BindingList<Color>();
             dgv_elements.DataSource = work.elements;
             dgv_groups.DataSource = work.clusters;
-            
+
         }
-                                              /* ОТРИСОВКА ПОЛЯ И ДОБАВЛЕНИЕ ЭЛЕМЕНТОВ */
+        /* ОТРИСОВКА ПОЛЯ И ДОБАВЛЕНИЕ ЭЛЕМЕНТОВ */
 
 
         //отвечает за добавление точек на полотно
@@ -107,14 +108,16 @@ namespace Kmeans
                 }
                 draw_centroid(gdi, cluster);
             }
+            lbl_dots.Text = "Точек: " + work.elements.Count;
+            lbl_centroids.Text = "Центроид: " + work.clusters.Count;
         }
 
         void draw_point(Graphics gdi, Element point, Brush brush, int size = 8)
         {
-                int halfsize = size / 2;
-                gdi.FillEllipse(brush, (int)point.X - halfsize, (int)point.Y - halfsize, size, size);
-                gdi.DrawEllipse(Pens.Black, (int)point.X - halfsize, (int)point.Y - halfsize, size, size);
-            }
+            int halfsize = size / 2;
+            gdi.FillEllipse(brush, (int)point.X - halfsize, (int)point.Y - halfsize, size, size);
+            gdi.DrawEllipse(Pens.Black, (int)point.X - halfsize, (int)point.Y - halfsize, size, size);
+        }
 
         void draw_centroid(Graphics gdi, Cluster centroid, int size = 16)
         {
@@ -125,7 +128,7 @@ namespace Kmeans
                 draw_point(gdi, centroid, centroid.brush, size);
                 gdi.DrawLine(Pens.Black, (int)centroid.X, (int)centroid.Y + halfsize, (int)centroid.X, (int)centroid.Y - halfsize);
                 gdi.DrawLine(Pens.Black, (int)centroid.X + halfsize, (int)centroid.Y, (int)centroid.X - halfsize, (int)centroid.Y);
-            
+
             }
             catch (OverflowException)
             {
@@ -140,9 +143,9 @@ namespace Kmeans
             gdi.DrawLine(Pens.Black, (int)p1.X, (int)p1.Y, (int)p2.X, (int)p2.Y);
         }
 
-                                                         /* ЛОГИКА ПРОГРАММЫ */
+        /* ЛОГИКА ПРОГРАММЫ */
 
-              
+
         private void btn_start_Click(object sender, EventArgs e)
         {
             try
@@ -247,7 +250,7 @@ namespace Kmeans
             this.work.MaxInfelicity = (double)numericUpDown1.Value;
         }
 
-                                                    /*  ВЫГРУЗКА ЗАГРУЗКА CSV   */
+        /*  ВЫГРУЗКА ЗАГРУЗКА CSV   */
 
         void saveToCsv(string filename)
         {
@@ -283,7 +286,7 @@ namespace Kmeans
                     line = sr.ReadLine();
                     do
                     {
-                        
+
                         parts = line.Split(',');
                         work.elements.Add(new Element(Convert.ToDouble(parts[0]), Convert.ToDouble(parts[1])));
                         line = sr.ReadLine();
@@ -301,17 +304,18 @@ namespace Kmeans
 
                 }
             }
-            
+
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-                var od = new OpenFileDialog();
-                od.Filter = "*.CSV|*.csv";
-                if (od.ShowDialog() == DialogResult.OK)
-                {
-                    openCsv(od.FileName);
-                }
+            var od = new OpenFileDialog();
+            od.Filter = "*.CSV|*.csv";
+            if (od.ShowDialog() == DialogResult.OK)
+            {
+                openCsv(od.FileName);
+            }
+            canvas.Invalidate();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -321,6 +325,7 @@ namespace Kmeans
             {
                 saveToCsv(sd.FileName);
             }
+            canvas.Invalidate();
         }
 
     }

@@ -30,6 +30,8 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.canvas = new System.Windows.Forms.PictureBox();
+            this.lbl_centroids = new System.Windows.Forms.Label();
+            this.lbl_dots = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -67,6 +69,8 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.lbl_centroids);
+            this.splitContainer1.Panel2.Controls.Add(this.lbl_dots);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
             this.splitContainer1.Panel2.Controls.Add(this.numericUpDown1);
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
@@ -74,8 +78,8 @@
             this.splitContainer1.Panel2.Controls.Add(this.button1);
             this.splitContainer1.Panel2.Controls.Add(this.button3);
             this.splitContainer1.Panel2.Controls.Add(this.btn_start);
-            this.splitContainer1.Size = new System.Drawing.Size(779, 362);
-            this.splitContainer1.SplitterDistance = 520;
+            this.splitContainer1.Size = new System.Drawing.Size(984, 662);
+            this.splitContainer1.SplitterDistance = 656;
             this.splitContainer1.TabIndex = 0;
             // 
             // canvas
@@ -83,17 +87,35 @@
             this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.canvas.Location = new System.Drawing.Point(0, 0);
             this.canvas.Name = "canvas";
-            this.canvas.Size = new System.Drawing.Size(520, 362);
+            this.canvas.Size = new System.Drawing.Size(656, 662);
             this.canvas.TabIndex = 0;
             this.canvas.TabStop = false;
             this.canvas.WaitOnLoad = true;
             this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
             this.canvas.MouseClick += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseClick);
             // 
+            // lbl_centroids
+            // 
+            this.lbl_centroids.AutoSize = true;
+            this.lbl_centroids.Location = new System.Drawing.Point(100, 72);
+            this.lbl_centroids.Name = "lbl_centroids";
+            this.lbl_centroids.Size = new System.Drawing.Size(68, 13);
+            this.lbl_centroids.TabIndex = 5;
+            this.lbl_centroids.Text = "Центроид: 0";
+            // 
+            // lbl_dots
+            // 
+            this.lbl_dots.AutoSize = true;
+            this.lbl_dots.Location = new System.Drawing.Point(9, 72);
+            this.lbl_dots.Name = "lbl_dots";
+            this.lbl_dots.Size = new System.Drawing.Size(49, 13);
+            this.lbl_dots.TabIndex = 5;
+            this.lbl_dots.Text = "Точек: 0";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(120, 64);
+            this.label1.Location = new System.Drawing.Point(180, 72);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(75, 13);
             this.label1.TabIndex = 4;
@@ -107,7 +129,7 @@
             0,
             0,
             131072});
-            this.numericUpDown1.Location = new System.Drawing.Point(201, 62);
+            this.numericUpDown1.Location = new System.Drawing.Point(261, 70);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             10,
             0,
@@ -128,7 +150,7 @@
             this.splitContainer2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer2.Location = new System.Drawing.Point(3, 94);
+            this.splitContainer2.Location = new System.Drawing.Point(3, 96);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -139,8 +161,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.dgv_groups);
-            this.splitContainer2.Size = new System.Drawing.Size(249, 274);
-            this.splitContainer2.SplitterDistance = 179;
+            this.splitContainer2.Size = new System.Drawing.Size(318, 572);
+            this.splitContainer2.SplitterDistance = 283;
             this.splitContainer2.TabIndex = 2;
             // 
             // dgv_elements
@@ -150,7 +172,7 @@
             this.dgv_elements.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_elements.Location = new System.Drawing.Point(0, 0);
             this.dgv_elements.Name = "dgv_elements";
-            this.dgv_elements.Size = new System.Drawing.Size(249, 179);
+            this.dgv_elements.Size = new System.Drawing.Size(318, 283);
             this.dgv_elements.TabIndex = 0;
             this.dgv_elements.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_groups_CellValueChanged);
             // 
@@ -161,13 +183,13 @@
             this.dgv_groups.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_groups.Location = new System.Drawing.Point(0, 0);
             this.dgv_groups.Name = "dgv_groups";
-            this.dgv_groups.Size = new System.Drawing.Size(249, 91);
+            this.dgv_groups.Size = new System.Drawing.Size(318, 285);
             this.dgv_groups.TabIndex = 0;
             this.dgv_groups.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_groups_CellValueChanged);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(129, 32);
+            this.button2.Location = new System.Drawing.Point(189, 41);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(123, 23);
             this.button2.TabIndex = 1;
@@ -177,7 +199,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(3, 32);
+            this.button1.Location = new System.Drawing.Point(12, 41);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(123, 23);
             this.button1.TabIndex = 1;
@@ -187,7 +209,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(3, 3);
+            this.button3.Location = new System.Drawing.Point(12, 12);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(123, 23);
             this.button3.TabIndex = 1;
@@ -197,7 +219,7 @@
             // 
             // btn_start
             // 
-            this.btn_start.Location = new System.Drawing.Point(129, 3);
+            this.btn_start.Location = new System.Drawing.Point(189, 12);
             this.btn_start.Name = "btn_start";
             this.btn_start.Size = new System.Drawing.Size(123, 23);
             this.btn_start.TabIndex = 1;
@@ -209,9 +231,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(779, 362);
+            this.ClientSize = new System.Drawing.Size(984, 662);
             this.Controls.Add(this.splitContainer1);
-            this.MinimumSize = new System.Drawing.Size(795, 400);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(1000, 700);
+            this.MinimumSize = new System.Drawing.Size(1000, 700);
             this.Name = "Form1";
             this.Text = "K-means";
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -244,6 +268,8 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbl_centroids;
+        private System.Windows.Forms.Label lbl_dots;
     }
 }
 

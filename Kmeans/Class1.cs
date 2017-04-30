@@ -46,7 +46,7 @@ namespace Kmeans
         public SolidBrush brush;
 
         //Для поля в DGV
-        public string BrushColor
+        public string ClusterColor
         {
             get
             {
@@ -91,9 +91,16 @@ namespace Kmeans
 
     class Work
     {
+        public Work(double max_infelicity = 0.1)
+        {
+
+            this.elements = new BindingList<Element>();
+            this.clusters = new BindingList<Cluster>();
+            this.MaxInfelicity = max_infelicity;
+        }
+
         public BindingList<Element> elements;
 
-        public BindingList<Element> unstacked;
 
         public BindingList<Cluster> clusters;
         
@@ -111,24 +118,27 @@ namespace Kmeans
             }
         }
 
-        public Work(double max_infelicity=0.1)
+        public BindingList<Cluster> start()
         {
+            while (step())
+            {
+                ;
+            }
 
-            this.elements = new BindingList<Element>();
-            this.unstacked = new BindingList<Element>();
-            this.clusters = new BindingList<Cluster>();
-            this.MaxInfelicity = max_infelicity;
+            return this.clusters;
+        }
+
+
+        public bool step()
+        {
+            prepare();
+
+            calc_elements();
+            return calc_clusters();
         }
 
         void prepare()
         {
-            ////Добавить новые элементы
-            //foreach (var element in this.unstacked)
-            //{
-            //    this.elements.Add(element);
-            //}
-            //this.unstacked.Clear();
-            
             foreach (Cluster cluster in this.clusters)
             {
                 cluster.elements.Clear();
@@ -147,13 +157,13 @@ namespace Kmeans
             {
                 //Задали начальный минимум растояния, как до первого кластера
                 Cluster closest = this.clusters[0];
-                double min_distance = get_distance(el, this.clusters[0]);
-                double distance;
+                double min_distance = get_distance(el, closest);
+                
 
                 //Проверка расстояния между кластерами и данной точкой
                 foreach (Cluster cluster in this.clusters)
                 {
-                    distance = get_distance(el, cluster);
+                    double distance = get_distance(el, cluster);
                     if (distance < min_distance)
                     {
                         min_distance = distance;
@@ -168,46 +178,31 @@ namespace Kmeans
 
         bool calc_clusters()
         {
-
             //Пересчет координат центроид
+
             //Флаг за изменение позиции хотя бы одного центроида
             bool is_one_changed = false;
             foreach (Cluster cluster in this.clusters)
             {
                 double infelicity = cluster.refind_position();
+
+                //истина, если хотя бы один изменился на максимальную погрешность
                 is_one_changed = is_one_changed || infelicity >= max_infelicity;
             }
 
             //Очистка элементов кластера
+            //Проходит с конца, так как существует вероятность удалить не пустой кластер (индекс смещается)
             for (int i = this.clusters.Count-1; i > 0; i--)
             {
 
                 if (this.clusters[i].elements.Count == 0)
                 {
-                    //Удалить пустые кластеры
                     this.clusters.RemoveAt(i);
                 }
             }
 
-            
+            //Вернуть флаг изменения позиции хотя бы одного кластера
             return is_one_changed;
-        }
-
-        public bool step()
-        {
-            prepare();
-
-            calc_elements();
-            return calc_clusters();
-        }
-        public BindingList<Cluster> start()
-        {
-            while (step())
-            {
-                ;
-            }
-
-            return this.clusters;
         }
 
         double get_distance(Element el1, Element el2)
