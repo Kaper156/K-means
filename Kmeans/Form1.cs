@@ -30,9 +30,7 @@ namespace Kmeans
         public Form1()
         {
             InitializeComponent();
-            //dgv_elements.AutoGenerateColumns = false;
-            //dgv_groups.AutoGenerateColumns = false;
-            this.work = new Work(0.05);
+            this.work = new Work((double)numericUpDown1.Value);
             used_colors = new List<Color>();
             dgv_elements.DataSource = work.elements;
             dgv_groups.DataSource = work.clusters;
@@ -40,70 +38,6 @@ namespace Kmeans
         }
                                               /* ОТРИСОВКА ПОЛЯ И ДОБАВЛЕНИЕ ЭЛЕМЕНТОВ */
 
-        private void Form1_Paint(object sender, PaintEventArgs e)
-        {
-            //every_draw();
-        }
-
-        //Отрисовка всего графика
-        void every_draw(Graphics gdi)
-        {
-
-            //using (Graphics gdi = canvas.CreateGraphics())
-            //{
-                //Отрисовать координатную сетку
-                gdi.Clear(Color.White);
-                int x = canvas.Width,
-                    y = canvas.Height;
-                gdi.DrawLine(Pens.Red, new Point(0, y / 2), new Point(x, y / 2));
-                gdi.DrawLine(Pens.Red, new Point(x / 2, 0), new Point(x / 2, y));
-
-
-                //Нарисовать все объекты
-                foreach (Element element in work.elements)
-                {
-                    draw_point(gdi, element, Brushes.Black);
-                }
-                foreach (Cluster cluster in work.clusters)
-                {
-                        foreach (Element element in cluster.elements)
-                        {
-                            draw_point(gdi, element, cluster.brush);
-                        }
-                        draw_centroid(gdi, cluster);
-                }
-                
-                 
-
-            //}
-            
-        }
-
-        void draw_point(Graphics gdi, Element point, Brush brush, int size = 7)
-        {
-                int halfsize = size / 2;
-                gdi.FillEllipse(brush, (int)point.X - halfsize, (int)point.Y - halfsize, size, size);
-                gdi.DrawEllipse(Pens.Black, (int)point.X - halfsize, (int)point.Y - halfsize, size, size);
-            }
-
-        void draw_centroid(Graphics gdi, Cluster centroid, int size = 15)
-        {
-            try
-            {
-
-                int halfsize = size / 2;
-                draw_point(gdi, centroid, centroid.brush, size);
-                gdi.DrawLine(Pens.Black, (int)centroid.X, (int)centroid.Y + halfsize, (int)centroid.X, (int)centroid.Y - halfsize);
-                gdi.DrawLine(Pens.Black, (int)centroid.X + halfsize, (int)centroid.Y, (int)centroid.X - halfsize, (int)centroid.Y);
-            
-            }
-            catch (OverflowException)
-            {
-                //У центроиды нет точек
-                used_colors.Remove(centroid.brush.Color);
-            }
-
-        }
 
         //отвечает за добавление точек на полотно
         private void canvas_MouseClick(object sender, MouseEventArgs e)
@@ -144,62 +78,70 @@ namespace Kmeans
             return color;
         }
 
-                                                        /* СОБЫТИЯ ОТРИСОВКИ */
-
-        private void Form1_Move(object sender, EventArgs e)
+        private void canvas_Paint(object sender, PaintEventArgs e)
         {
-            //every_draw();
+            Graphics gdi = e.Graphics;
+            //"Заполнить" белым
+            gdi.Clear(Color.White);
+
+            //Отрисовать координатную сетку
+            int x = canvas.Width,
+                y = canvas.Height;
+            gdi.DrawLine(Pens.Red, new Point(0, y / 2), new Point(x, y / 2));
+            gdi.DrawLine(Pens.Red, new Point(x / 2, 0), new Point(x / 2, y));
+
+
+            //Нарисовать все точки
+            foreach (Element element in work.elements)
+            {
+                draw_point(gdi, element, Brushes.Black);
+            }
+
+            //А теперь кластеры и их точки
+            foreach (Cluster cluster in work.clusters)
+            {
+                foreach (Element element in cluster.elements)
+                {
+                    line_between(gdi, cluster, element);
+                    draw_point(gdi, element, cluster.brush);
+                }
+                draw_centroid(gdi, cluster);
+            }
         }
 
-        private void Form1_Resize(object sender, EventArgs e)
+        void draw_point(Graphics gdi, Element point, Brush brush, int size = 8)
         {
-            //every_draw();
+                int halfsize = size / 2;
+                gdi.FillEllipse(brush, (int)point.X - halfsize, (int)point.Y - halfsize, size, size);
+                gdi.DrawEllipse(Pens.Black, (int)point.X - halfsize, (int)point.Y - halfsize, size, size);
+            }
+
+        void draw_centroid(Graphics gdi, Cluster centroid, int size = 16)
+        {
+            try
+            {
+
+                int halfsize = size / 2;
+                draw_point(gdi, centroid, centroid.brush, size);
+                gdi.DrawLine(Pens.Black, (int)centroid.X, (int)centroid.Y + halfsize, (int)centroid.X, (int)centroid.Y - halfsize);
+                gdi.DrawLine(Pens.Black, (int)centroid.X + halfsize, (int)centroid.Y, (int)centroid.X - halfsize, (int)centroid.Y);
+            
+            }
+            catch (OverflowException)
+            {
+                //У центроиды нет точек
+                used_colors.Remove(centroid.brush.Color);
+            }
+
+        }
+
+        void line_between(Graphics gdi, Element p1, Element p2)
+        {
+            gdi.DrawLine(Pens.Black, (int)p1.X, (int)p1.Y, (int)p2.X, (int)p2.Y);
         }
 
                                                          /* ЛОГИКА ПРОГРАММЫ */
 
-
-        void ElementsChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add: // если добавление
-                    {
-                        
-                    }
-                    break;
-                case NotifyCollectionChangedAction.Remove: // если удаление
-                    break;
-                case NotifyCollectionChangedAction.Replace: // если замена
-                    break;
-            }
-        }
-
-        void ClustersChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add: // если добавление
-                    break;
-                case NotifyCollectionChangedAction.Remove: // если удаление
-                    break;
-                case NotifyCollectionChangedAction.Replace: // если замена
-                    break;
-            }
-        }
-
-        void UnstackedChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add: // если добавление
-                    break;
-                case NotifyCollectionChangedAction.Remove: // если удаление
-                    break;
-                case NotifyCollectionChangedAction.Replace: // если замена
-                    break;
-            }
-        }
               
         private void btn_start_Click(object sender, EventArgs e)
         {
@@ -215,76 +157,70 @@ namespace Kmeans
             canvas.Invalidate();
         }
 
-        private void открытьCsvToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            /*
-             * Структура файла вида: 
-             * х1
-             * y1
-             * Clusters (для разделения пустая строка)
-             * x1
-             * y1
-            */
+        //private void открытьCsvToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    /*
+        //     * Структура файла вида: 
+        //     * х1
+        //     * y1
+        //     * Clusters (для разделения пустая строка)
+        //     * x1
+        //     * y1
+        //    */
 
-            var od = new OpenFileDialog();
-            if (od.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
+        //    var od = new OpenFileDialog();
+        //    if (od.ShowDialog() == DialogResult.OK)
+        //    {
+        //        try
+        //        {
 
-                    StreamReader tr = new StreamReader(od.FileName);
-                    string[] lines = tr.ReadToEnd().Split('\n');
-                    tr.Close();
-                    int i;
-                    for (i = 0; i < lines.Length; i++)
-                    {
-                        //Пустая строка отделяет элементы от кластеров
-                        if (lines[i].Trim() == "")
-                        {
-                            break;
-                        }
-                        Element el = new Element(Convert.ToDouble(lines[i]), Convert.ToDouble(lines[i + 1]));
-                        work.unstacked.Add(el);
+        //            StreamReader tr = new StreamReader(od.FileName);
+        //            string[] lines = tr.ReadToEnd().Split('\n');
+        //            tr.Close();
+        //            int i;
+        //            for (i = 0; i < lines.Length; i++)
+        //            {
+        //                //Пустая строка отделяет элементы от кластеров
+        //                if (lines[i].Trim() == "")
+        //                {
+        //                    break;
+        //                }
+        //                Element el = new Element(Convert.ToDouble(lines[i]), Convert.ToDouble(lines[i + 1]));
+        //                work.unstacked.Add(el);
 
-                        //Увеличить курсор (был на первой координате)
-                        i++;
-                    }
-                    for (; i < lines.Length; i++)
-                    {
-                        Cluster cl = new Cluster(Convert.ToDouble(lines[i]), Convert.ToDouble(lines[i + 1]), do_new_rnd_color());
-                        work.clusters.Add(cl);
-                    }
-                    tr.Close();
-                }
-                catch (FormatException)
-                {
-                    MessageBox.Show("Ошибка","Неверный формат данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+        //                //Увеличить курсор (был на первой координате)
+        //                i++;
+        //            }
+        //            for (; i < lines.Length; i++)
+        //            {
+        //                Cluster cl = new Cluster(Convert.ToDouble(lines[i]), Convert.ToDouble(lines[i + 1]), do_new_rnd_color());
+        //                work.clusters.Add(cl);
+        //            }
+        //            tr.Close();
+        //        }
+        //        catch (FormatException)
+        //        {
+        //            MessageBox.Show("Ошибка","Неверный формат данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        }
+        //    }
 
-        }
+        //}
 
-        private void сохранитьCsvToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog sd = new SaveFileDialog();
-            if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                StreamWriter sw = new StreamWriter(sd.FileName);
-                foreach (Cluster cl in work.clusters)
-                {
-                    sw.WriteLine(cl.X);
-                    sw.WriteLine(cl.Y);
+        //private void сохранитьCsvToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    SaveFileDialog sd = new SaveFileDialog();
+        //    if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        //    {
+        //        StreamWriter sw = new StreamWriter(sd.FileName);
+        //        foreach (Cluster cl in work.clusters)
+        //        {
+        //            sw.WriteLine(cl.X);
+        //            sw.WriteLine(cl.Y);
 
-                }
-                sw.Close();
-            }
-        }
-
-        private void canvas_Paint(object sender, PaintEventArgs e)
-        {
-            
-            every_draw(e.Graphics);
-        }
+        //        }
+        //        sw.Close();
+        //    }
+        //}
 
 
         private void btn_step_Click(object sender, EventArgs e)
@@ -311,7 +247,81 @@ namespace Kmeans
             this.work.MaxInfelicity = (double)numericUpDown1.Value;
         }
 
+                                                    /*  ВЫГРУЗКА ЗАГРУЗКА CSV   */
 
+        void saveToCsv(string filename)
+        {
+            /*
+             * х1, у1, № кластера
+             */
+            StreamWriter sw;
+            using (sw = new StreamWriter(filename))
+            {
+                int cluster_counter = 0;
+                foreach (Cluster cluster in this.work.clusters)
+                {
+                    cluster_counter++;
+                    foreach (Element element in cluster.elements)
+                    {
+                        sw.WriteLine(String.Format("{0},{1},{2}", element.X, element.Y, cluster_counter));
+                    }
+                }
+            }
+        }
+
+
+        void openCsv(string filename)
+        {
+            StreamReader sr;
+            //try
+            {
+
+                using (sr = new StreamReader(filename))
+                {
+                    string line = "";
+                    string[] parts = new string[2];
+                    line = sr.ReadLine();
+                    do
+                    {
+                        
+                        parts = line.Split(',');
+                        work.elements.Add(new Element(Convert.ToDouble(parts[0]), Convert.ToDouble(parts[1])));
+                        line = sr.ReadLine();
+
+                    }
+                    while (line != "");
+
+                    //Кончились точки, дальше приблиз. коорд. кластеров
+                    while (!sr.EndOfStream)
+                    {
+                        line = sr.ReadLine();
+                        parts = line.Split(',');
+                        work.clusters.Add(new Cluster(Convert.ToDouble(parts[0]), Convert.ToDouble(parts[1]), do_new_rnd_color()));
+                    }
+
+                }
+            }
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+                var od = new OpenFileDialog();
+                od.Filter = "*.CSV|*.csv";
+                if (od.ShowDialog() == DialogResult.OK)
+                {
+                    openCsv(od.FileName);
+                }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sd = new SaveFileDialog();
+            if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                saveToCsv(sd.FileName);
+            }
+        }
 
     }
 }
