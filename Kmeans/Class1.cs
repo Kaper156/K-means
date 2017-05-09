@@ -17,6 +17,8 @@ namespace Kmeans
             this.Y = y;
         }
         double _x, _y;
+
+        //поля данных
         public double X
         {
             get { return _x; }
@@ -26,6 +28,16 @@ namespace Kmeans
         {
             get { return _y; }
             set { _y = value; }
+        }
+
+        //поля для координат
+        public int getPixelX()
+        {
+            return Convert.ToInt32(_x); 
+        }
+        public int getPixelY()
+        {
+            return Convert.ToInt32(_y);
         }
     }
 
@@ -93,19 +105,16 @@ namespace Kmeans
     {
         public Work(double max_infelicity = 0.1)
         {
-
             this.elements = new BindingList<Element>();
             this.clusters = new BindingList<Cluster>();
             this.MaxInfelicity = max_infelicity;
         }
 
         public BindingList<Element> elements;
-
-
+        
         public BindingList<Cluster> clusters;
         
         private double max_infelicity;
-        
         public double MaxInfelicity
         {
             get
@@ -118,21 +127,18 @@ namespace Kmeans
             }
         }
 
-        public BindingList<Cluster> start()
+        public void start()
         {
             while (step())
             {
                 ;
             }
 
-            return this.clusters;
         }
-
-
+        
         public bool step()
         {
             prepare();
-
             calc_elements();
             return calc_clusters();
         }

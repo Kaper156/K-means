@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "K-means (WinForms)", "K-means (WinForms)\K-means (WinForms).csproj", "{459E156C-5F97-4347-94D2-21CED1AECD32}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kmeans", "Kmeans\Kmeans.csproj", "{DEF583DD-2201-428C-B324-C52FD269CF35}"
 EndProject
 Global
@@ -11,10 +9,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{459E156C-5F97-4347-94D2-21CED1AECD32}.Debug|x86.ActiveCfg = Debug|x86
-		{459E156C-5F97-4347-94D2-21CED1AECD32}.Debug|x86.Build.0 = Debug|x86
-		{459E156C-5F97-4347-94D2-21CED1AECD32}.Release|x86.ActiveCfg = Release|x86
-		{459E156C-5F97-4347-94D2-21CED1AECD32}.Release|x86.Build.0 = Release|x86
 		{DEF583DD-2201-428C-B324-C52FD269CF35}.Debug|x86.ActiveCfg = Debug|x86
 		{DEF583DD-2201-428C-B324-C52FD269CF35}.Debug|x86.Build.0 = Debug|x86
 		{DEF583DD-2201-428C-B324-C52FD269CF35}.Release|x86.ActiveCfg = Release|x86

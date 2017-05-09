@@ -37,8 +37,8 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.dgv_elements = new System.Windows.Forms.DataGridView();
             this.dgv_groups = new System.Windows.Forms.DataGridView();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_csv_save = new System.Windows.Forms.Button();
+            this.btn_csv_add = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.btn_start = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -74,8 +74,8 @@
             this.splitContainer1.Panel2.Controls.Add(this.label1);
             this.splitContainer1.Panel2.Controls.Add(this.numericUpDown1);
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Panel2.Controls.Add(this.button2);
-            this.splitContainer1.Panel2.Controls.Add(this.button1);
+            this.splitContainer1.Panel2.Controls.Add(this.btn_csv_save);
+            this.splitContainer1.Panel2.Controls.Add(this.btn_csv_add);
             this.splitContainer1.Panel2.Controls.Add(this.button3);
             this.splitContainer1.Panel2.Controls.Add(this.btn_start);
             this.splitContainer1.Size = new System.Drawing.Size(984, 662);
@@ -135,6 +135,11 @@
             0,
             0,
             0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(51, 20);
             this.numericUpDown1.TabIndex = 3;
@@ -167,6 +172,9 @@
             // 
             // dgv_elements
             // 
+            this.dgv_elements.AllowUserToOrderColumns = true;
+            this.dgv_elements.AllowUserToResizeColumns = false;
+            this.dgv_elements.AllowUserToResizeRows = false;
             this.dgv_elements.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgv_elements.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgv_elements.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -178,6 +186,9 @@
             // 
             // dgv_groups
             // 
+            this.dgv_groups.AllowUserToOrderColumns = true;
+            this.dgv_groups.AllowUserToResizeColumns = false;
+            this.dgv_groups.AllowUserToResizeRows = false;
             this.dgv_groups.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgv_groups.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_groups.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -187,29 +198,29 @@
             this.dgv_groups.TabIndex = 0;
             this.dgv_groups.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_groups_CellValueChanged);
             // 
-            // button2
+            // btn_csv_save
             // 
-            this.button2.Location = new System.Drawing.Point(189, 41);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(123, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Сохранить результат";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btn_csv_save.Location = new System.Drawing.Point(12, 41);
+            this.btn_csv_save.Name = "btn_csv_save";
+            this.btn_csv_save.Size = new System.Drawing.Size(123, 23);
+            this.btn_csv_save.TabIndex = 1;
+            this.btn_csv_save.Text = "Сохранить результат";
+            this.btn_csv_save.UseVisualStyleBackColor = true;
+            this.btn_csv_save.Click += new System.EventHandler(this.btn_csv_save_Click);
             // 
-            // button1
+            // btn_csv_add
             // 
-            this.button1.Location = new System.Drawing.Point(12, 41);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(123, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Добавить данные";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btn_csv_add.Location = new System.Drawing.Point(12, 12);
+            this.btn_csv_add.Name = "btn_csv_add";
+            this.btn_csv_add.Size = new System.Drawing.Size(123, 23);
+            this.btn_csv_add.TabIndex = 1;
+            this.btn_csv_add.Text = "Добавить данные";
+            this.btn_csv_add.UseVisualStyleBackColor = true;
+            this.btn_csv_add.Click += new System.EventHandler(this.btn_csv_add_Click);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(12, 12);
+            this.button3.Location = new System.Drawing.Point(183, 12);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(123, 23);
             this.button3.TabIndex = 1;
@@ -219,7 +230,7 @@
             // 
             // btn_start
             // 
-            this.btn_start.Location = new System.Drawing.Point(189, 12);
+            this.btn_start.Location = new System.Drawing.Point(183, 41);
             this.btn_start.Name = "btn_start";
             this.btn_start.Size = new System.Drawing.Size(123, 23);
             this.btn_start.TabIndex = 1;
@@ -263,8 +274,8 @@
         private System.Windows.Forms.DataGridView dgv_elements;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.DataGridView dgv_groups;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_csv_save;
+        private System.Windows.Forms.Button btn_csv_add;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label1;

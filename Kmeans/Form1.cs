@@ -34,13 +34,15 @@ namespace Kmeans
             this.work = new Work((double)numericUpDown1.Value);
             used_colors = new BindingList<Color>();
             dgv_elements.DataSource = work.elements;
+            dgv_elements.Columns[0].SortMode = DataGridViewColumnSortMode.Automatic;
+            dgv_elements.Columns[1].SortMode = DataGridViewColumnSortMode.Automatic;
+
             dgv_groups.DataSource = work.clusters;
 
         }
+
         /* ОТРИСОВКА ПОЛЯ И ДОБАВЛЕНИЕ ЭЛЕМЕНТОВ */
-
-
-        //отвечает за добавление точек на полотно
+        
         private void canvas_MouseClick(object sender, MouseEventArgs e)
         {
             switch (e.Button)
@@ -64,6 +66,7 @@ namespace Kmeans
 
         }
 
+        //TODO
         private Color do_new_rnd_color()
         {
             Color color;
@@ -115,8 +118,8 @@ namespace Kmeans
         void draw_point(Graphics gdi, Element point, Brush brush, int size = 8)
         {
             int halfsize = size / 2;
-            gdi.FillEllipse(brush, (int)point.X - halfsize, (int)point.Y - halfsize, size, size);
-            gdi.DrawEllipse(Pens.Black, (int)point.X - halfsize, (int)point.Y - halfsize, size, size);
+            gdi.FillEllipse(brush, point.getPixelX() - halfsize, point.getPixelY() - halfsize, size, size);
+            gdi.DrawEllipse(Pens.Black, point.getPixelX() - halfsize, point.getPixelY() - halfsize, size, size);
         }
 
         void draw_centroid(Graphics gdi, Cluster centroid, int size = 16)
@@ -145,7 +148,6 @@ namespace Kmeans
 
         /* ЛОГИКА ПРОГРАММЫ */
 
-
         private void btn_start_Click(object sender, EventArgs e)
         {
             try
@@ -160,77 +162,10 @@ namespace Kmeans
             canvas.Invalidate();
         }
 
-        //private void открытьCsvToolStripMenuItem_Click(object sender, EventArgs e)
-        //{
-        //    /*
-        //     * Структура файла вида: 
-        //     * х1
-        //     * y1
-        //     * Clusters (для разделения пустая строка)
-        //     * x1
-        //     * y1
-        //    */
-
-        //    var od = new OpenFileDialog();
-        //    if (od.ShowDialog() == DialogResult.OK)
-        //    {
-        //        try
-        //        {
-
-        //            StreamReader tr = new StreamReader(od.FileName);
-        //            string[] lines = tr.ReadToEnd().Split('\n');
-        //            tr.Close();
-        //            int i;
-        //            for (i = 0; i < lines.Length; i++)
-        //            {
-        //                //Пустая строка отделяет элементы от кластеров
-        //                if (lines[i].Trim() == "")
-        //                {
-        //                    break;
-        //                }
-        //                Element el = new Element(Convert.ToDouble(lines[i]), Convert.ToDouble(lines[i + 1]));
-        //                work.unstacked.Add(el);
-
-        //                //Увеличить курсор (был на первой координате)
-        //                i++;
-        //            }
-        //            for (; i < lines.Length; i++)
-        //            {
-        //                Cluster cl = new Cluster(Convert.ToDouble(lines[i]), Convert.ToDouble(lines[i + 1]), do_new_rnd_color());
-        //                work.clusters.Add(cl);
-        //            }
-        //            tr.Close();
-        //        }
-        //        catch (FormatException)
-        //        {
-        //            MessageBox.Show("Ошибка","Неверный формат данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //        }
-        //    }
-
-        //}
-
-        //private void сохранитьCsvToolStripMenuItem_Click(object sender, EventArgs e)
-        //{
-        //    SaveFileDialog sd = new SaveFileDialog();
-        //    if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-        //    {
-        //        StreamWriter sw = new StreamWriter(sd.FileName);
-        //        foreach (Cluster cl in work.clusters)
-        //        {
-        //            sw.WriteLine(cl.X);
-        //            sw.WriteLine(cl.Y);
-
-        //        }
-        //        sw.Close();
-        //    }
-        //}
-
-
         private void btn_step_Click(object sender, EventArgs e)
         {
             try
             {
-
                 work.step();
             }
             catch (AccessViolationException exc)
@@ -240,6 +175,7 @@ namespace Kmeans
             canvas.Invalidate();
         }
 
+        /*  СОБЫТИЯ ТАБЛИЦЫ   */
         private void dgv_groups_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             canvas.Invalidate();
@@ -271,7 +207,6 @@ namespace Kmeans
                 }
             }
         }
-
 
         void openCsv(string filename)
         {
@@ -307,23 +242,23 @@ namespace Kmeans
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btn_csv_save_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sd = new SaveFileDialog();
+            if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                saveToCsv(sd.FileName);
+            }
+            canvas.Invalidate();
+        }
+
+        private void btn_csv_add_Click(object sender, EventArgs e)
         {
             var od = new OpenFileDialog();
             od.Filter = "*.CSV|*.csv";
             if (od.ShowDialog() == DialogResult.OK)
             {
                 openCsv(od.FileName);
-            }
-            canvas.Invalidate();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog sd = new SaveFileDialog();
-            if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                saveToCsv(sd.FileName);
             }
             canvas.Invalidate();
         }
