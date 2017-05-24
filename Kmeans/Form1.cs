@@ -8,13 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Collections.Specialized;
 using System.IO;
-/*
- * DataGrid
- * -Масштаирование графика
- * +Загрузка csv
- * +Перерисовка
- * -RndColor
- */
 
 namespace Kmeans
 {
@@ -33,11 +26,18 @@ namespace Kmeans
             InitializeComponent();
             this.work = new Work((double)numericUpDown1.Value);
             used_colors = new BindingList<Color>();
+
             dgv_elements.DataSource = work.elements;
             dgv_elements.Columns[0].SortMode = DataGridViewColumnSortMode.Automatic;
             dgv_elements.Columns[1].SortMode = DataGridViewColumnSortMode.Automatic;
+            dgv_elements.AllowUserToAddRows = true;
+            dgv_elements.Columns[2].Visible = false;
+            dgv_elements.Columns[3].Visible = false;
 
             dgv_groups.DataSource = work.clusters;
+            dgv_groups.AllowUserToAddRows = true;
+            dgv_groups.Columns[3].Visible = false;
+            dgv_groups.Columns[4].Visible = false;
 
         }
 
@@ -60,8 +60,6 @@ namespace Kmeans
                     }
                     break;
             }
-            //Не нужен. вызывается от события
-            //every_draw();
             canvas.Invalidate();
 
         }
@@ -88,12 +86,13 @@ namespace Kmeans
             //"Заполнить" белым
             gdi.Clear(Color.White);
 
+            /*
             //Отрисовать координатную сетку
             int x = canvas.Width,
                 y = canvas.Height;
             gdi.DrawLine(Pens.Red, new Point(0, y / 2), new Point(x, y / 2));
             gdi.DrawLine(Pens.Red, new Point(x / 2, 0), new Point(x / 2, y));
-
+            */
 
             //Нарисовать все точки
             foreach (Element element in work.elements)
@@ -118,8 +117,8 @@ namespace Kmeans
         void draw_point(Graphics gdi, Element point, Brush brush, int size = 8)
         {
             int halfsize = size / 2;
-            gdi.FillEllipse(brush, point.getPixelX() - halfsize, point.getPixelY() - halfsize, size, size);
-            gdi.DrawEllipse(Pens.Black, point.getPixelX() - halfsize, point.getPixelY() - halfsize, size, size);
+            gdi.FillEllipse(brush, point.PixelX - halfsize, point.PixelY - halfsize, size, size);
+            gdi.DrawEllipse(Pens.Black, point.PixelX - halfsize, point.PixelY - halfsize, size, size);
         }
 
         void draw_centroid(Graphics gdi, Cluster centroid, int size = 16)
@@ -193,25 +192,33 @@ namespace Kmeans
             /*
              * х1, у1, № кластера
              */
-            StreamWriter sw;
-            using (sw = new StreamWriter(filename))
+            try
             {
-                int cluster_counter = 0;
-                foreach (Cluster cluster in this.work.clusters)
+                StreamWriter sw;
+                using (sw = new StreamWriter(filename))
                 {
-                    cluster_counter++;
-                    foreach (Element element in cluster.elements)
+                    int cluster_counter = 0;
+                    foreach (Cluster cluster in this.work.clusters)
                     {
-                        sw.WriteLine(String.Format("{0},{1},{2}", element.X, element.Y, cluster_counter));
+                        cluster_counter++;
+                        foreach (Element element in cluster.elements)
+                        {
+                            sw.WriteLine(String.Format("{0},{1},{2}", element.X, element.Y, cluster_counter));
+                        }
                     }
                 }
             }
+            catch (EndOfStreamException)
+            {
+                MessageBox.Show("Ошибка", "Произошла ошибка при создании потока записи, проверьте существоавание файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
 
         void openCsv(string filename)
         {
             StreamReader sr;
-            //try
+            try
             {
 
                 using (sr = new StreamReader(filename))
@@ -239,12 +246,17 @@ namespace Kmeans
 
                 }
             }
+            catch (Exception e)
+            {
+                MessageBox.Show("Ошибка", "Произошла ошибка при открытии файла: "+e.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
         }
 
         private void btn_csv_save_Click(object sender, EventArgs e)
         {
             SaveFileDialog sd = new SaveFileDialog();
+            sd.Filter = "*.CSV|*.csv";
             if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 saveToCsv(sd.FileName);

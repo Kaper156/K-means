@@ -1,8 +1,0 @@
-D:\Text\УЧЁБА\ОМГТУ\2 семестр\Programming\KP\clasters\K-means (WinForms)\K-means (WinForms)\K-means (WinForms)\bin\Debug\K-means (WinForms).exe
-D:\Text\УЧЁБА\ОМГТУ\2 семестр\Programming\KP\clasters\K-means (WinForms)\K-means (WinForms)\K-means (WinForms)\bin\Debug\K-means (WinForms).pdb
-D:\Text\УЧЁБА\ОМГТУ\2 семестр\Programming\KP\clasters\K-means (WinForms)\K-means (WinForms)\K-means (WinForms)\obj\x86\Debug\K_means__WinForms_.Form1.resources
-D:\Text\УЧЁБА\ОМГТУ\2 семестр\Programming\KP\clasters\K-means (WinForms)\K-means (WinForms)\K-means (WinForms)\obj\x86\Debug\K_means__WinForms_.Properties.Resources.resources
-D:\Text\УЧЁБА\ОМГТУ\2 семестр\Programming\KP\clasters\K-means (WinForms)\K-means (WinForms)\K-means (WinForms)\obj\x86\Debug\K-means (WinForms).csproj.GenerateResource.Cache
-D:\Text\УЧЁБА\ОМГТУ\2 семестр\Programming\KP\clasters\K-means (WinForms)\K-means (WinForms)\K-means (WinForms)\obj\x86\Debug\K-means (WinForms).exe
-D:\Text\УЧЁБА\ОМГТУ\2 семестр\Programming\KP\clasters\K-means (WinForms)\K-means (WinForms)\K-means (WinForms)\obj\x86\Debug\K-means (WinForms).pdb
-D:\Text\УЧЁБА\ОМГТУ\2 семестр\Programming\KP\clasters\K-means (WinForms)\K-means (WinForms)\K-means (WinForms)\obj\x86\Debug\K-means (WinForms).csprojResolveAssemblyReference.cache

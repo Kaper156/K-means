@@ -78,16 +78,17 @@
             this.splitContainer1.Panel2.Controls.Add(this.btn_csv_add);
             this.splitContainer1.Panel2.Controls.Add(this.button3);
             this.splitContainer1.Panel2.Controls.Add(this.btn_start);
-            this.splitContainer1.Size = new System.Drawing.Size(984, 662);
+            this.splitContainer1.Size = new System.Drawing.Size(984, 641);
             this.splitContainer1.SplitterDistance = 656;
             this.splitContainer1.TabIndex = 0;
             // 
             // canvas
             // 
-            this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.canvas.Location = new System.Drawing.Point(0, 0);
+            this.canvas.MaximumSize = new System.Drawing.Size(650, 650);
+            this.canvas.MinimumSize = new System.Drawing.Size(650, 650);
             this.canvas.Name = "canvas";
-            this.canvas.Size = new System.Drawing.Size(656, 662);
+            this.canvas.Size = new System.Drawing.Size(650, 650);
             this.canvas.TabIndex = 0;
             this.canvas.TabStop = false;
             this.canvas.WaitOnLoad = true;
@@ -97,7 +98,7 @@
             // lbl_centroids
             // 
             this.lbl_centroids.AutoSize = true;
-            this.lbl_centroids.Location = new System.Drawing.Point(100, 72);
+            this.lbl_centroids.Location = new System.Drawing.Point(79, 72);
             this.lbl_centroids.Name = "lbl_centroids";
             this.lbl_centroids.Size = new System.Drawing.Size(68, 13);
             this.lbl_centroids.TabIndex = 5;
@@ -115,7 +116,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(180, 72);
+            this.label1.Location = new System.Drawing.Point(174, 72);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(75, 13);
             this.label1.TabIndex = 4;
@@ -123,25 +124,25 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.DecimalPlaces = 2;
+            this.numericUpDown1.DecimalPlaces = 4;
             this.numericUpDown1.Increment = new decimal(new int[] {
             5,
             0,
             0,
-            131072});
-            this.numericUpDown1.Location = new System.Drawing.Point(261, 70);
+            262144});
+            this.numericUpDown1.Location = new System.Drawing.Point(255, 70);
             this.numericUpDown1.Maximum = new decimal(new int[] {
-            10,
+            1,
             0,
             0,
             0});
             this.numericUpDown1.Minimum = new decimal(new int[] {
-            5,
+            1,
             0,
             0,
-            131072});
+            262144});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(51, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(57, 20);
             this.numericUpDown1.TabIndex = 3;
             this.numericUpDown1.Value = new decimal(new int[] {
             1,
@@ -166,8 +167,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.dgv_groups);
-            this.splitContainer2.Size = new System.Drawing.Size(318, 572);
-            this.splitContainer2.SplitterDistance = 283;
+            this.splitContainer2.Size = new System.Drawing.Size(318, 551);
+            this.splitContainer2.SplitterDistance = 272;
             this.splitContainer2.TabIndex = 2;
             // 
             // dgv_elements
@@ -180,7 +181,7 @@
             this.dgv_elements.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_elements.Location = new System.Drawing.Point(0, 0);
             this.dgv_elements.Name = "dgv_elements";
-            this.dgv_elements.Size = new System.Drawing.Size(318, 283);
+            this.dgv_elements.Size = new System.Drawing.Size(318, 272);
             this.dgv_elements.TabIndex = 0;
             this.dgv_elements.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_groups_CellValueChanged);
             // 
@@ -194,7 +195,7 @@
             this.dgv_groups.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_groups.Location = new System.Drawing.Point(0, 0);
             this.dgv_groups.Name = "dgv_groups";
-            this.dgv_groups.Size = new System.Drawing.Size(318, 285);
+            this.dgv_groups.Size = new System.Drawing.Size(318, 275);
             this.dgv_groups.TabIndex = 0;
             this.dgv_groups.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_groups_CellValueChanged);
             // 
@@ -242,11 +243,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 662);
+            this.ClientSize = new System.Drawing.Size(984, 641);
             this.Controls.Add(this.splitContainer1);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1000, 700);
-            this.MinimumSize = new System.Drawing.Size(1000, 700);
+            this.MinimumSize = new System.Drawing.Size(16, 38);
             this.Name = "Form1";
             this.Text = "K-means";
             this.splitContainer1.Panel1.ResumeLayout(false);

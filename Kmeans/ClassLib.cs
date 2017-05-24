@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 namespace Kmeans
 {
-    
     public class Element
     {
         public Element(double x, double y)
@@ -18,7 +17,7 @@ namespace Kmeans
         }
         double _x, _y;
 
-        //поля данных
+        //свойства данных
         public double X
         {
             get { return _x; }
@@ -30,14 +29,14 @@ namespace Kmeans
             set { _y = value; }
         }
 
-        //поля для координат
-        public int getPixelX()
+        //свойста координат
+        public int PixelX
         {
-            return Convert.ToInt32(_x); 
+            get { return Convert.ToInt32(_x); }
         }
-        public int getPixelY()
+        public int PixelY
         {
-            return Convert.ToInt32(_y);
+            get { return Convert.ToInt32(_y); }
         }
     }
 
@@ -66,7 +65,6 @@ namespace Kmeans
             }
             set
             {
-                //TODO:Если сделать комбобокс, то не нужен
                 try
                 {
 
@@ -165,7 +163,6 @@ namespace Kmeans
                 Cluster closest = this.clusters[0];
                 double min_distance = get_distance(el, closest);
                 
-
                 //Проверка расстояния между кластерами и данной точкой
                 foreach (Cluster cluster in this.clusters)
                 {
@@ -200,7 +197,6 @@ namespace Kmeans
             //Проходит с конца, так как существует вероятность удалить не пустой кластер (индекс смещается)
             for (int i = this.clusters.Count-1; i > 0; i--)
             {
-
                 if (this.clusters[i].elements.Count == 0)
                 {
                     this.clusters.RemoveAt(i);
